@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: pg-deploy
+  name: pg-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pg-deploy
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: pg-deploy
+    spec:
+      containers:
+       - name: pg-container
+         image: postgres:14
+         resources:
+          limits:
+            cpu: 1
+            memory: 2Gi
+          requests:
+            cpu: 500m
+            memory: 1Gi
+         #args: ["-c", "max_connections=10","-c","shared_buffers=128MB"]
+         ports:
+          - containerPort: 5432
+         envFrom:
+          - configMapRef:
+             name: pg-config
+          - secretRef:
+             name: pg-secret
+         volumeMounts:
+          - mountPath: /var/lib/postgresql/data
+            name: pg-storage
+      volumes:
+        - name: pg-storage
+          persistentVolumeClaim:
+            claimName: pg-pv-claim
