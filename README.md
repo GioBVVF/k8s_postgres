@@ -1,4 +1,4 @@
-## k8s_postgres
+### k8s_postgres
 
 ## Simple PostgreSQL deployment on k8s
 
