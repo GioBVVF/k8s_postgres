@@ -4,7 +4,7 @@
 
 ### Introduction
 
-This definistion file provides a simply deployment of a PostgreSQL on Kubernetes.
+This definistion file provides a simply PostgreSQLdeployment on Kubernetes cluster.
 
 License
 -------
